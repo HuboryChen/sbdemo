@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>useList</title>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-3.3.7/dist/css/bootstrap.css}"/>
+    <script th:src="@{/plugins/jquery.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap-3.3.7/dist/js/bootstrap.min.js}"></script>
+</head>
+<body class="container">
+    <br/>
+    <h1>用户列表</h1>
+    <br/><br/>
+    <!-- 添加用户 -->
+    <div class="form-group">
+        <div class="col-sm-2 control-label">
+            <a href="/toAdd" th:href="@{/toAdd}" class="btn btn-info">add</a>
+        </div>
+    </div>
+
+    <div class="with:80%">
+        <!-- 用户列表 -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User Name</th>
+                    <th>Password</th>
+                    <th>Age</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user:${userPage.content}">
+                    <td th:scope="row" th:text="${user.id}">1</td>
+                    <td th:text="${user.username}">张三</td>
+                    <td th:text="${user.password}">666666</td>
+                    <td th:text="${user.type}">管理员</td>
+                    <td th:text="${user.status}">启用</td>
+                    <td><a href="@{/toEdit(id=${user.id})}">edit</a></td>
+                    <td><a href="@{/toDelete(id=${user.id})}">delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 分页 -->
+        <ul class="pagination" style="text-align:center">
+            <!-- 第一页-->
+            <li>
+                <a href="?page=1"  class="">第一页</a>
+            </li>
+
+            <!--上一页-->
+            <li th:if="${userPage.number > 0 }">
+                <a th:href="@{?(page=${userPage.number})}">上一页</a>
+            </li>
+
+            <!--迭代生成页数-->
+            <li th:each="i:${#numbers.sequence(1,userPage.totalPages)}" th:classappend="${(userPage.number + 1) eq i} ? 'active' : ''">
+                <a th:href="@{?(page=${i})}" th:text="${i}" class="">1</a>
+            </li>
+
+            <!--下一页-->
+            <li th:unless="${userPage.number + 1 == userPage.totalPages}">
+                <a th:href="@{?(page=${userPage.number} + 2)}">下一页</a>
+            </li>
+
+            <!--最末页-->
+            <li>
+                <a th:href="@{?(page = ${userPage.totalPages})}">最末页</a>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+</body>
+</html>
