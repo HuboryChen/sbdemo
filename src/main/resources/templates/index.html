@@ -8,6 +8,8 @@
     <script th:src="@{/plugins/bootstrap-3.3.7/dist/js/bootstrap.min.js}"></script>
 </head>
 <body class="container">
+    <div th:replace="fragments/header :: header"></div>
+
     <br/>
     <h1>用户列表</h1>
     <br/><br/>
@@ -74,6 +76,7 @@
 
     </div>
 
+    <div th:replace="fragments/footer :: footer"></div>
 
 
 </body>
