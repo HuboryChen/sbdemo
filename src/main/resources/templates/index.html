@@ -6,9 +6,10 @@
     <link rel="stylesheet" th:href="@{/plugins/bootstrap-3.3.7/dist/css/bootstrap.css}"/>
     <script th:src="@{/plugins/jquery.min.js}"></script>
     <script th:src="@{/plugins/bootstrap-3.3.7/dist/js/bootstrap.min.js}"></script>
+    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
 </head>
 <body class="container">
-    <div th:replace="fragments/header :: header"></div>
+    <!--<div th:replace="fragments/header :: header"></div>-->
 
     <br/>
     <h1>用户列表</h1>
@@ -16,7 +17,9 @@
     <!-- 添加用户 -->
     <div class="form-group">
         <div class="col-sm-2 control-label">
-            <a href="/toAdd" th:href="@{/toAdd}" class="btn btn-info">add</a>
+            <a href="#"  class="btn btn-info" th:onclick="'javascript:addUser();'">add</a>
+            &nbsp;&nbsp;
+            <a href="/toAdd">add</a>
         </div>
     </div>
 
@@ -29,6 +32,7 @@
                     <th>User Name</th>
                     <th>Password</th>
                     <th>Age</th>
+                    <th>status</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -39,8 +43,8 @@
                     <td th:text="${user.username}">张三</td>
                     <td th:text="${user.password}">666666</td>
                     <td th:text="${user.type}">管理员</td>
-                    <td th:text="${user.status}">启用</td>
-                    <td><a href="@{/toEdit(id=${user.id})}">edit</a></td>
+                    <td th:text="${user.status == 0 ? '停用' : '启用'}">是/否启用</td>
+                    <td><a  class=" btn default" href="#example"  data-toggle="modal">edit</a></td>
                     <td><a href="@{/toDelete(id=${user.id})}">delete</a></td>
                 </tr>
             </tbody>
@@ -76,8 +80,83 @@
 
     </div>
 
-    <div th:replace="fragments/footer :: footer"></div>
+    <!--<div th:replace="fragments/footer :: footer"></div>-->
 
+    <!--<div th:include="userAdd :: adduserModel"></div>-->
+
+    <!--<div id="example" class="modal fade in" tabindex="-1" role="dialog" style="display:none;">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+
+                <!--<div class="modal-header">-->
+                    <!--<a class="close" data-dismiss="modal">X</a>-->
+                    <!--<h3>我是拟态框的头部</h3>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<h4>我是拟态框的中间部分</h4>-->
+                    <!--<p>我是描述部分</p>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<a href="#" class="btn btn-success">成功</a>-->
+                    <!--<a href="#" class="btn" data-dismiss="modal">关闭</a>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+    <div id="example"></div>
+
+    <script>
+        function addUser()
+        {
+            $.ajax({
+                url:'/toAdd',
+                contentType:'application/html;charset=utf-8',
+                type:'get',
+                dataType:'html',
+                success: function (data) {
+                    layer.open({
+                        type: 1
+                        ,title:'添加用户'
+                        ,area:['500px','300px']
+                        ,offset: 'auto' //具体配置参考：offset参数项
+                        ,content: $("#example").html(data)
+                        // ,btn: '关闭全部'
+                        ,btnAlign: 'c' //按钮居中
+                        ,shade: 0.4 //不显示遮罩
+                        ,yes: function(){
+                            layer.closeAll();
+                        }
+                    });
+
+
+                }
+            })
+
+
+            // $.post('/toAdd', {}, function(data){
+            //     // $("#example").html(data);
+            //     layer.open({
+            //         type: 1
+            //         ,offset: 'auto' //具体配置参考：offset参数项
+            //         ,content: $("#example").html(data)
+            //         ,btn: '关闭全部'
+            //         ,btnAlign: 'c' //按钮居中
+            //         ,shade: 0 //不显示遮罩
+            //         ,yes: function(){
+            //             layer.closeAll();
+            //         }
+            //     });
+            // });
+
+
+
+
+        }
+
+    </script>
 
 </body>
 </html>

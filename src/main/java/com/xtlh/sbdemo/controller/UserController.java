@@ -41,7 +41,7 @@ public class UserController {
     {
         Page<User> userPage = userService.findAll(page);
         model.addAttribute("userPage",userPage);
-        return "index";
+        return "index.html";
     }
 
     /**
@@ -71,12 +71,13 @@ public class UserController {
         return userPage;
     }*/
 
-   /* @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
+    @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
     private String toAdd()
     {
         return "userAdd";
     }
 
+/*
     private String userSave(User user)
     {
         return "index";
