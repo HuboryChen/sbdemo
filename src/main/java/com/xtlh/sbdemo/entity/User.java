@@ -1,9 +1,6 @@
 package com.xtlh.sbdemo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @作者 陈坤
@@ -12,32 +9,34 @@ import javax.persistence.Id;
  */
 @Entity
 public class User {
-    @Id
-    @GeneratedValue
-    private long id;    //自动id
-
-    @Column(nullable = false, unique = true)
+    private Long id;    //自动id
     private String username;    //用户名
-
-    @Column(nullable = false)
     private String password;    //用户密码
-
-    @Column(nullable = false)
     private String type;        //用户类型
-
-    @Column(nullable = false)
     private int status;         //账户状态
 
     public User(){}         //空构造函数
 
-    public long getId() {
+    public User(String username, String password, String type, int status) {
+        this.username = username;
+        this.password = password;
+        this.type = type;
+        this.status = status;
+    }
+
+    @Id
+    @Column(name = "id",nullable = false, unique = true,length = 11)
+    @GeneratedValue
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "username",nullable = false)
     public String getUsername() {
         return username;
     }
@@ -46,6 +45,8 @@ public class User {
         this.username = username;
     }
 
+    @Basic
+    @Column(name = "password",nullable = false)
     public String getPassword() {
         return password;
     }
@@ -54,6 +55,8 @@ public class User {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "type",nullable = false)
     public String getType() {
         return type;
     }
@@ -62,6 +65,8 @@ public class User {
         this.type = type;
     }
 
+    @Basic
+    @Column(name = "status",nullable = false)
     public int getStatus() {
         return status;
     }

@@ -15,4 +15,11 @@ public interface UserService{
     //根据多种信息模糊查询用户
    // Page<User> findSearch(String username, Pageable pageable);
 
+    //添加用户
+    public User saveUser(User user);
+
+    //删除用户
+    public void deleteUser(Long id);
+
+
 }

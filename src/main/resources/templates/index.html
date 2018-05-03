@@ -9,9 +9,6 @@
     <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
 </head>
 <body class="container">
-    <!--<div th:replace="fragments/header :: header"></div>-->
-
-    <br/>
     <h1>用户列表</h1>
     <br/><br/>
     <!-- 添加用户 -->
@@ -19,7 +16,7 @@
         <div class="col-sm-2 control-label">
             <a href="#"  class="btn btn-info" th:onclick="'javascript:addUser();'">add</a>
             &nbsp;&nbsp;
-            <a href="/toAdd">add</a>
+            <a href="/userAdd.html">add</a>
         </div>
     </div>
 
@@ -45,7 +42,7 @@
                     <td th:text="${user.type}">管理员</td>
                     <td th:text="${user.status == 0 ? '停用' : '启用'}">是/否启用</td>
                     <td><a  class=" btn default" href="#example"  data-toggle="modal">edit</a></td>
-                    <td><a href="@{/toDelete(id=${user.id})}">delete</a></td>
+                    <td><a th:href="@{/delete(id=${user.id})}">delete</a></td>
                 </tr>
             </tbody>
         </table>
@@ -80,35 +77,30 @@
 
     </div>
 
-    <!--<div th:replace="fragments/footer :: footer"></div>-->
-
-    <!--<div th:include="userAdd :: adduserModel"></div>-->
-
-    <!--<div id="example" class="modal fade in" tabindex="-1" role="dialog" style="display:none;">-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content">-->
-
-                <!--<div class="modal-header">-->
-                    <!--<a class="close" data-dismiss="modal">X</a>-->
-                    <!--<h3>我是拟态框的头部</h3>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<h4>我是拟态框的中间部分</h4>-->
-                    <!--<p>我是描述部分</p>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<a href="#" class="btn btn-success">成功</a>-->
-                    <!--<a href="#" class="btn" data-dismiss="modal">关闭</a>-->
-                <!--</div>-->
-
-            <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-
     <div id="example"></div>
 
     <script>
+        /*使用直接调用静态页面的形式调用html*/
+        function addUser()
+        {
+            layer.open({
+                type: 2
+                ,skin: 'layui-layer-rim'
+                ,title:'添加用户'
+                ,area:['500px','300px']
+                ,offset: 'auto' //具体配置参考：offset参数项
+                ,content: 'userAdd.html'
+                // ,btn: '关闭全部'
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0.4 //不显示遮罩
+                ,yes: function(){
+                    layer.closeAll();
+                }
+            });
+        }
+
+       /* 使用转发的形式调用html*/
+       /*
         function addUser()
         {
             $.ajax({
@@ -135,26 +127,7 @@
                 }
             })
 
-
-            // $.post('/toAdd', {}, function(data){
-            //     // $("#example").html(data);
-            //     layer.open({
-            //         type: 1
-            //         ,offset: 'auto' //具体配置参考：offset参数项
-            //         ,content: $("#example").html(data)
-            //         ,btn: '关闭全部'
-            //         ,btnAlign: 'c' //按钮居中
-            //         ,shade: 0 //不显示遮罩
-            //         ,yes: function(){
-            //             layer.closeAll();
-            //         }
-            //     });
-            // });
-
-
-
-
-        }
+        }*/
 
     </script>
 

@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     public Page<User> findByCondition(String username, String type, int page)
     {
-        Pageable pageable = new PageRequest(page-1, 3, new Sort(Sort.Direction.ASC, "id"));
+        Pageable pageable = new PageRequest(page-1, 3, new Sort(Sort.Direction.DESC, "id"));
         Specification<User> querySpecifi = new Specification<User>()
         {
             @Override
@@ -63,6 +63,18 @@ public class UserServiceImpl implements UserService {
             }
         };
         return userRepository.findAll(querySpecifi, pageable);
+    }
+
+    @Override
+    public User saveUser(User user)
+    {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long id)
+    {
+        userRepository.deleteById(id);
     }
 
 

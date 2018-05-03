@@ -23,7 +23,7 @@ public class UserController {
     UserService userService;
 
     /*@RequestMapping(value = "/users", method = RequestMethod.GET)
-    private String userList(Model model)
+    public String userList(Model model)
     {
         List<User> users = userRepository.findAll();
         model.addAttribute("users",users);
@@ -37,7 +37,7 @@ public class UserController {
      * @return 分页列表信息
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    private String userList(Model model, @RequestParam(name="page",defaultValue = "1")int page)
+    public String userList(Model model, @RequestParam(name="page",defaultValue = "1")int page)
     {
         Page<User> userPage = userService.findAll(page);
         model.addAttribute("userPage",userPage);
@@ -53,7 +53,7 @@ public class UserController {
      * @return 用户列表分页对象
      */
     @RequestMapping(value = "usersbycondition",method = RequestMethod.GET)
-    private String userListBycondition(Model model, @RequestParam(name = "username", defaultValue = "") String username,
+    public String userListBycondition(Model model, @RequestParam(name = "username", defaultValue = "") String username,
                                        @RequestParam(name = "type", defaultValue = "") String type,
                                        @RequestParam(name = "page", defaultValue = "1")int page)
     {
@@ -65,21 +65,49 @@ public class UserController {
 
 
     /*@GetMapping(value = "/users")
-    private Page<User> userList(@RequestParam(value = "page")int page)
+    public Page<User> userList(@RequestParam(value = "page")int page)
     {
         Page<User> userPage = userService.findAll(page);
         return userPage;
     }*/
 
+    /**
+     *
+     * @作者		陈坤
+     * @创建日期	2018/5/3 15:13
+     * @功能描述	跳转到添加用户界面
+     * @参数
+     * @返回值
+     *
+     */
     @RequestMapping(value = "/toAdd", method = RequestMethod.GET)
-    private String toAdd()
+    public String toAdd()
     {
         return "userAdd";
     }
 
-/*
-    private String userSave(User user)
+    /**
+     *
+     * @作者		陈坤
+     * @创建日期	2018/5/3 15:13
+     * @功能描述	添加用户，并重定向到/users
+     * @参数
+     * @返回值
+     *
+     */
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public String saveUser(@ModelAttribute(value = "user")  User user)
     {
-        return "index";
-    }*/
+        System.out.println(user.getUsername()+"==========================");
+        userService.saveUser(user);
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    public String deleteUser(Long id)
+    {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
+
 }

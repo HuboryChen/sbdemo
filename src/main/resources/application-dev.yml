@@ -16,6 +16,10 @@ spring:
     servlet:
       content-type: text/html
     cache: false
+  mvc:
+      static-path-pattern: /**    #静态文件请求匹配方式
+  resources:
+    static-locations: classpath:/templates/,classpath:/static/    #设置静态资源访问路径
 
 #数据源配置
   datasource:
@@ -27,6 +31,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 
 
 
