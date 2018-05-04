@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Page<User> findAll(int page) {
-        Pageable pageable = new PageRequest(page-1, 3, new Sort(Sort.Direction.ASC, "id"));
+        Pageable pageable = new PageRequest(page-1, 3, new Sort(Sort.Direction.DESC, "id"));
         Page<User> userPage = userRepository.findAll(pageable);
         return userPage;
     }

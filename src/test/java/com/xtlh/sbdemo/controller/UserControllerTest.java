@@ -30,7 +30,7 @@ public class UserControllerTest {
         user.setType("管理员");
         user.setStatus(0);
 
-        userController.saveUser(user);
+//        userController.saveUser(user);
 
     }
 

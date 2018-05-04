@@ -35,8 +35,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user:${userPage.content}">
-                    <td th:scope="row" th:text="${user.id}">1</td>
+                <tr th:each="user,userStat:${userPage.content}">
+                    <td th:scope="row" th:text="${userStat.index+1}">1</td>
                     <td th:text="${user.username}">张三</td>
                     <td th:text="${user.password}">666666</td>
                     <td th:text="${user.type}">管理员</td>
@@ -83,17 +83,23 @@
         /*使用直接调用静态页面的形式调用html*/
         function addUser()
         {
+            var user_form = undefined;
             layer.open({
                 type: 2
                 ,skin: 'layui-layer-rim'
                 ,title:'添加用户'
-                ,area:['500px','300px']
+                ,area:['800px','300px']
                 ,offset: 'auto' //具体配置参考：offset参数项
                 ,content: 'userAdd.html'
-                // ,btn: '关闭全部'
-                ,btnAlign: 'c' //按钮居中
                 ,shade: 0.4 //不显示遮罩
-                ,yes: function(){
+                ,btn: '提交'
+                ,btnAlign: 'c' //按钮居中
+                ,success: function(layero, index){
+                    user_form = layer.getChildFrame('#user_form',index);
+                }
+                ,yes: function () {
+                    alert("sjdhjshdjshdjshdj");
+                    user_form.submit();
                     layer.closeAll();
                 }
             });

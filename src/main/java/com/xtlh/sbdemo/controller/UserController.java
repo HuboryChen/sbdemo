@@ -99,8 +99,8 @@ public class UserController {
     public String saveUser(@ModelAttribute(value = "user")  User user)
     {
         System.out.println(user.getUsername()+"==========================");
-        userService.saveUser(user);
-        return "redirect:/users";
+//        userService.saveUser(user);
+        return "index";
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
