@@ -6,49 +6,55 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" />
     <script  src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script  src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
+    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+    <style>
+        .form-inline label{
+            justify-content: right;
+        }
+    </style>
 </head>
 <body class="container">
     <div class="panel panel-default ">
-        <form class="form-horizontal" id="user_form" role="form" action="/add" method="post" th:object="${user}" >
+        <form class="form-horizontal" id="user_form" role="form" action="/add" method="post"  th:object="${user}" >
 
-            <div class="form-group">
-                <label for="username"  class="col-sm-4 control-label">用户名：</label>
-                <div class="col-sm-8">
-                    <input type="text" class="from-control" id="username" name="username" placeholder="请输入名称">
+            <div class="form-group form-inline">
+                <div  class="col-sm-3 form-label ">
+                    <label for="username">用户名：</label>
                 </div>
+                <input type="text" class="col-sm-8 form-control" id="username" name="username" placeholder="请输入名称">
             </div>
 
-            <div class="form-group">
-                <label for="password"  class="col-sm-4 control-label">密码：</label>
-                <div class="col-sm-8">
-                    <input type="text" class="from-control" id="password"  name="password" placeholder="请输入密码">
+            <div class="form-group form-inline">
+                <div  class="col-sm-3 form-label text-right">
+                    <label for="password">密码：</label>
                 </div>
+                <input type="text" class="col-sm-8 form-control" id="password"  name="password" placeholder="请输入密码">
             </div>
 
-            <div class="form-group">
-                <label for="type"  class="col-sm-4 control-label">用户类型：</label>
-                <div class="col-sm-8">
-                    <select type="text" class="from-control" id="type" name="type" placeholder="请输入用户类型">
-                        <option value="管理员">管理员</option>
-                        <option value="业务员">业务员</option>
-                        <option value="超级管理员">超级管理员</option>
-                    </select>
+            <div class="form-group form-inline">
+                <div  class="col-sm-3 form-label ">
+                    <label for="type" class="text-right">用户类型：</label>
                 </div>
+                <select type="text" class="col-sm-8 form-control" id="type" name="type" placeholder="请输入用户类型">
+                    <option value="管理员">管理员</option>
+                    <option value="业务员">业务员</option>
+                    <option value="超级管理员">超级管理员</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <label for="status"  class="col-sm-4 control-label">状态：</label>
-                <div class="col-sm-8">
-                    <select type="text" class="from-control" id="status" name="status" placeholder="请输入用户类型">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
+            <div class="form-group form-inline">
+                <div  class="col-sm-3 form-label text-right">
+                    <label for="status">状态：</label>
                 </div>
+                <select type="text" class="col-sm-8 form-control" id="status" name="status" placeholder="请输入用户类型">
+                    <option value="1">启用</option>
+                    <option value="0">停用</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-primary  center-block" id="user_save_sub">提交</button>
+            <div class="col-sm-2 float-right">
+                <div class="">
+                <p type="button" class="btn btn-primary " id="btn_save" >提交</p>
                 </div>
             </div>
 
@@ -56,7 +62,36 @@
 
     </div>
 
-</div>
+    <script>
+        var index = parent.layer.getFrameIndex(window.name);    //获取当前窗口索引
+        $("#btn_save").click(function () {
+            var url = $("#user_form").attr("action");
+            var param = $("#user_form").serialize();
+            $.ajax({
+                type: "post",
+                url: url,
+                data: param,
+                complete: function () {
+                    parent.layer.closeAll("iframe");
+                    console.log("hjsdhsjdhj");
+
+                }
+            })
+        })
+        // $("#user_form").on('submit',function () {
+        //     alert();
+        //     $.ajax({
+        //        type: "post",
+        //        url: "/add",
+        //        data : $("#user_form").serialize(),
+        //        success: function (result) {
+        //            layer.close(layer.index);;
+        //            window.parent.lacation.reload();
+        //        }
+        //     });
+        // })
+
+    </script>
 
 </body>
 </html>

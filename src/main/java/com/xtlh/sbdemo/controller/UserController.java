@@ -96,11 +96,12 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
     public String saveUser(@ModelAttribute(value = "user")  User user)
     {
-        System.out.println(user.getUsername()+"==========================");
-//        userService.saveUser(user);
-        return "index";
+        System.out.println("user.username=="+user.getUsername());
+        userService.saveUser(user);
+        return "success";
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
