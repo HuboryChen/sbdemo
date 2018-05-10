@@ -81,7 +81,7 @@
         function editUser(id)
         {
             layer.open({
-                type: 2
+                type: 2     //type的值可以为：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
                 ,skin: 'layui-layer-rim'
                 ,title:'修改用户'
                 ,area:['870px','330px']
@@ -93,7 +93,7 @@
 
 
         //添加用户
-        /*方法一：使用直接调用静态页面的形式调用html（将资源文件路径下的templates文件夹设置为可访问静态路径）*/
+        /* 使用直接调用静态页面的形式调用html（将资源文件路径下的templates文件夹设置为可访问静态路径）*/
         function addUser()
         {
             layer.open({
@@ -109,33 +109,6 @@
                 }
             });
         }
-
-       /* 方法二：使用转发的形式调用html*/
-       /*
-        function addUser()
-        {
-            $.ajax({
-                url:'/toAdd',
-                contentType:'application/html;charset=utf-8',
-                type:'get',
-                dataType:'html',
-                success: function (data) {
-                    layer.open({
-                        type: 1
-                        ,title:'添加用户'
-                        ,area:['500px','300px']
-                        ,offset: 'auto' //具体配置参考：offset参数项
-                        ,content: $("#example").html(data)
-                        // ,btn: '关闭全部'
-                        ,btnAlign: 'c' //按钮居中
-                        ,shade: 0.4 //不显示遮罩
-                        ,yes: function(){
-                            layer.closeAll();
-                        }
-                    });
-                }
-            })
-        }*/
 
     </script>
 
