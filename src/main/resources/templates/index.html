@@ -39,7 +39,7 @@
                     <td th:text="${user.password}">666666</td>
                     <td th:text="${user.type}">管理员</td>
                     <td th:text="${user.status == 0 ? '停用' : '启用'}">是/否启用</td>
-                    <td><a  class=" btn default" href="#example"  data-toggle="modal">edit</a></td>
+                    <td><a href="javascript:void(0)" th:onclick="'javascript:editUser('+${user.id}+')'"   data-toggle="modal">edit</a></td>
                     <td><a th:href="@{/delete(id=${user.id})}">delete</a></td>
                 </tr>
             </tbody>
@@ -77,6 +77,22 @@
 
 
     <script>
+        //编辑用户
+        function editUser(id)
+        {
+            layer.open({
+                type: 2
+                ,skin: 'layui-layer-rim'
+                ,title:'修改用户'
+                ,area:['870px','330px']
+                ,offset: 'auto' //具体配置参考：offset参数项
+                ,content: "/toModify?id="+id
+                ,shade: 0.4 //不显示遮罩
+            });
+        }
+
+
+        //添加用户
         /*方法一：使用直接调用静态页面的形式调用html（将资源文件路径下的templates文件夹设置为可访问静态路径）*/
         function addUser()
         {

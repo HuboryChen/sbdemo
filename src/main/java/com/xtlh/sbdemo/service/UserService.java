@@ -21,5 +21,7 @@ public interface UserService{
     //删除用户
     public void deleteUser(Long id);
 
+    public User findById(Long id);
+
 
 }

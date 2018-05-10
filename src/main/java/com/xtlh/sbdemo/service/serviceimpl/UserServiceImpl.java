@@ -18,6 +18,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @作者 陈坤
@@ -75,6 +76,13 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id)
     {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> u = userRepository.findById(id);
+        return u.orElse(null);  //存在即返回，不存在就返回null
+
     }
 
 

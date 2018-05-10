@@ -99,11 +99,27 @@ public class UserController {
     @ResponseBody
     public String saveUser(@ModelAttribute(value = "user")  User user)
     {
-        System.out.println("user.username=="+user.getUsername());
         userService.saveUser(user);
         return "success";
     }
 
+    @RequestMapping(value = "/toModify", method = RequestMethod.GET)
+    public String toModify(Long id, Model model)
+    {
+        User user = userService.findById(id);
+        model.addAttribute("user",user);
+        return "userAdd";
+    }
+
+    /**
+     *
+     * @作者		陈坤
+     * @创建日期	2018/5/10 9:51
+     * @功能描述	删除用户
+     * @参数
+     * @返回值
+     *
+     */
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public String deleteUser(Long id)
     {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,34 +8,34 @@
     <script  src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
     <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
     <style>
-        .form-inline label{
-            justify-content: right;
-        }
+        .form-inline label{ justify-content: right; }
     </style>
 </head>
 <body class="container">
-    <div class="panel panel-default ">
+    <div id="userData" class="panel panel-default ">
         <form class="form-horizontal" id="user_form" role="form" action="/add" method="post"  th:object="${user}" >
+
+            <input th:field="*{id}" hidden="hidden">
 
             <div class="form-group form-inline">
                 <div  class="col-sm-3 form-label ">
                     <label for="username">用户名：</label>
                 </div>
-                <input type="text" class="col-sm-8 form-control" id="username" name="username" placeholder="请输入名称">
+                <input type="text" class="col-sm-8 form-control" id="username" name="username" th:field="*{username}" placeholder="请输入名称">
             </div>
 
             <div class="form-group form-inline">
                 <div  class="col-sm-3 form-label text-right">
                     <label for="password">密码：</label>
                 </div>
-                <input type="text" class="col-sm-8 form-control" id="password"  name="password" placeholder="请输入密码">
+                <input type="text" class="col-sm-8 form-control" id="password" name="password" th:field="*{password}" placeholder="请输入密码">
             </div>
 
             <div class="form-group form-inline">
                 <div  class="col-sm-3 form-label ">
                     <label for="type" class="text-right">用户类型：</label>
                 </div>
-                <select type="text" class="col-sm-8 form-control" id="type" name="type" placeholder="请输入用户类型">
+                <select type="text" class="col-sm-8 form-control" id="type" name="type" th:field="*{type}" placeholder="请输入用户类型">
                     <option value="管理员">管理员</option>
                     <option value="业务员">业务员</option>
                     <option value="超级管理员">超级管理员</option>
@@ -46,7 +46,7 @@
                 <div  class="col-sm-3 form-label text-right">
                     <label for="status">状态：</label>
                 </div>
-                <select type="text" class="col-sm-8 form-control" id="status" name="status" placeholder="请输入用户类型">
+                <select type="text" class="col-sm-8 form-control" id="status" name="status" th:field="*{status}" placeholder="请输入用户类型">
                     <option value="1">启用</option>
                     <option value="0">停用</option>
                 </select>
@@ -63,7 +63,6 @@
     </div>
 
     <script>
-        var index = parent.layer.getFrameIndex(window.name);    //获取当前窗口索引
         $("#btn_save").click(function () {
             var url = $("#user_form").attr("action");
             var param = $("#user_form").serialize();
@@ -72,24 +71,13 @@
                 url: url,
                 data: param,
                 complete: function () {
-                    parent.layer.closeAll("iframe");
+                    parent.window.location.reload();
+                    parent.layer.closeAll();
                     console.log("hjsdhsjdhj");
 
                 }
             })
         })
-        // $("#user_form").on('submit',function () {
-        //     alert();
-        //     $.ajax({
-        //        type: "post",
-        //        url: "/add",
-        //        data : $("#user_form").serialize(),
-        //        success: function (result) {
-        //            layer.close(layer.index);;
-        //            window.parent.lacation.reload();
-        //        }
-        //     });
-        // })
 
     </script>
 
