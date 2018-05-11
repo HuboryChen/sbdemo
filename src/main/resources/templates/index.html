@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>useList</title>
+    <title  sec:authentication="name">useList</title>
     <link rel="stylesheet" th:href="@{/plugins/bootstrap-3.3.7/dist/css/bootstrap.css}"/>
     <script th:src="@{/plugins/jquery.min.js}"></script>
     <script th:src="@{/plugins/bootstrap-3.3.7/dist/js/bootstrap.min.js}"></script>
