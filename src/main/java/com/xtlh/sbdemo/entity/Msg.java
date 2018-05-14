@@ -7,7 +7,6 @@ import javax.persistence.Entity;
  * @创建日期 2018/5/11
  * @功能描述
  */
-@Entity
 public class Msg {
     private String title;
     private String content;

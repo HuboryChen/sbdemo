@@ -1,16 +1,15 @@
 package com.xtlh.sbdemo.security;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -18,8 +17,8 @@ import java.util.List;
  * @创建日期 2018/5/11
  * @功能描述 获取用户验证信息
  */
-
-public class MyUserDEtailService implements UserDetailsService{
+@Service
+public class MyUserDetailService implements UserDetailsService{
 
 
     /**
@@ -43,7 +42,8 @@ public class MyUserDEtailService implements UserDetailsService{
         else {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-        User user = new User(username, "123456", true, true, true, true, authorities);
+        String pw = new BCryptPasswordEncoder().encode("123456");
+        User user = new User(username, pw, true, true, true, true, authorities);
         return user;
     }
 }
