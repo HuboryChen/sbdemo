@@ -6,9 +6,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 @ComponentScan(basePackages = "com.xtlh.sbdemo")
 @SpringBootApplication
-@EnableWebSecurity		//启用web安全
+@EnableWebSecurity        //启用web安全
 public class SbdemoApplication extends SpringBootServletInitializer {
 
 	@Override

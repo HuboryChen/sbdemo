@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H+ 后台主题UI框架 - 主页示例</title>
+
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css?v=3.3.6"  th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link href="../static/css/font-awesome.min.css?v=4.4.0" th:href="@{/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet">
+    <link href="../static/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+    <link href="../static/css/style.css?v=4.1.0" th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-content">
+        <div class="col-sm-12">
+            <!-- Example Events -->
+            <div class="example-wrap">
+                <h4 class="example-title">事件</h4>
+                <div class="example">
+                    <div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
+                        事件结果
+                    </div>
+                    <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true"></th>
+                            <th data-field="id">ID</th>
+                            <th data-field="name">名称</th>
+                            <th data-field="price">价格</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- End Example Events -->
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+    <!-- 全局js -->
+    <script src="../static/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+    <script src="../static/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+    <script src="../static/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+
+    <!-- 自定义js -->
+    <script type="text/javascript" src="../static/js/content.js" th:src="@{/js/content.js}"></script>
+
+    <!-- 第三方插件 -->
+    <script src="../static/js/plugins/pace/pace.min.js" th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+
+    <script>
+        //编辑用户
+        function editUser(id)
+        {
+            layer.open({
+                type: 2     //type的值可以为：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                ,skin: 'layui-layer-rim'
+                ,title:'修改用户'
+                ,area:['870px','330px']
+                ,offset: 'auto' //具体配置参考：offset参数项
+                ,content: "/toModify?id="+id
+                ,shade: 0.4 //不显示遮罩
+            });
+        }
+
+
+        //添加用户
+        /* 使用直接调用静态页面的形式调用html（将资源文件路径下的templates文件夹设置为可访问静态路径）*/
+        function addUser()
+        {
+            layer.open({
+                type: 2
+                ,skin: 'layui-layer-rim'
+                ,title:'添加用户'
+                ,area:['800px','330px']
+                ,offset: 'auto' //具体配置参考：offset参数项
+                ,content: 'userAdd.html'
+                ,shade: 0.4 //不显示遮罩
+                ,end: function () {
+                    window.location.reload();   //刷新父页面
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

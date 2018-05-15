@@ -4,12 +4,9 @@ import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @作者 陈坤
@@ -27,7 +24,7 @@ public class UserController {
     {
         List<User> users = userRepository.findAll();
         model.addAttribute("users",users);
-        return "index";
+        return "userList";
     }*/
 
     /**
@@ -41,7 +38,7 @@ public class UserController {
     {
         Page<User> userPage = userService.findAll(page);
         model.addAttribute("userPage",userPage);
-        return "index.html";
+        return "userList";
     }
 
     /**
@@ -59,7 +56,7 @@ public class UserController {
     {
         Page<User> userPage = userService.findByCondition(username, type, page);
         model.addAttribute("userPage",userPage);
-        return "index";
+        return "userList";
     }
 
 
