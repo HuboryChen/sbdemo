@@ -2,6 +2,8 @@ package com.xtlh.sbdemo.controller;
 
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
+import com.xtlh.sbdemo.util.PageBean;
+import com.xtlh.sbdemo.util.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -57,6 +59,13 @@ public class UserController {
         Page<User> userPage = userService.findByCondition(username, type, page);
         model.addAttribute("userPage",userPage);
         return "userList";
+    }
+
+    @RequestMapping(value = "findUserForPage",method = RequestMethod.POST)
+    @ResponseBody
+    public PageBean findUsersForPage(PageParams params)
+    {
+        return userService.findForPage(params);
     }
 
 

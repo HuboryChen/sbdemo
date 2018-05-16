@@ -1,9 +1,9 @@
 package com.xtlh.sbdemo.service;
 
 import com.xtlh.sbdemo.entity.User;
+import com.xtlh.sbdemo.util.PageBean;
+import com.xtlh.sbdemo.util.PageParams;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 public interface UserService{
     //全部查询
@@ -24,4 +24,5 @@ public interface UserService{
     public User findById(Long id);
 
 
+    PageBean findForPage(PageParams params);
 }

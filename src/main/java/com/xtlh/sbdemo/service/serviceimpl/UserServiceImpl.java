@@ -3,6 +3,8 @@ package com.xtlh.sbdemo.service.serviceimpl;
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.repository.UserRepository;
 import com.xtlh.sbdemo.service.UserService;
+import com.xtlh.sbdemo.util.PageBean;
+import com.xtlh.sbdemo.util.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -83,6 +86,36 @@ public class UserServiceImpl implements UserService {
         Optional<User> u = userRepository.findById(id);
         return u.orElse(null);  //存在即返回，不存在就返回null
 
+    }
+
+    @Override
+    public PageBean findForPage(PageParams params) {
+        Pageable pageable = new PageRequest(params.getOffset()-1, params.getLimit(), new Sort(Sort.Direction.fromString(params.getOrder()), params.getSort()));
+
+        Map map = params.getQueryparam();   //获取查询条件参数
+
+        Specification<User> querySpecifi = new Specification<User>()
+        {
+            @Override
+            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder)
+            {
+                List<Predicate> predicates = new ArrayList<Predicate>();
+                String username = map.get("username").toString();
+                String type = map.get("type").toString();
+                if(!username.equals("") && null != username)
+                {
+                    predicates.add(criteriaBuilder.like(root.get("username"), "%"+username+"%"));
+                }
+                if(!type.equals("") && null != type)
+                {
+                    predicates.add(criteriaBuilder.equal(root.get("type"), type));
+                }
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        };
+        Page page = userRepository.findAll(querySpecifi, pageable);
+        PageBean pageBean = new PageBean(page.getTotalElements(),page.getContent());
+        return pageBean;
     }
 
 
