@@ -2,11 +2,8 @@ package com.xtlh.sbdemo.controller;
 
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
-import com.xtlh.sbdemo.util.PageBean;
-import com.xtlh.sbdemo.util.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
  * @创建日期 2018/4/24
  * @功能描述 用户控制器
  */
-//@RestController
-@Controller
+@RestController
+//@Controller
 public class UserController {
     @Autowired
     UserService userService;
@@ -51,7 +48,7 @@ public class UserController {
      * @param page  当前页
      * @return 用户列表分页对象
      */
-    @RequestMapping(value = "usersbycondition",method = RequestMethod.GET)
+    @RequestMapping(value = "/usersbycondition",method = RequestMethod.GET)
     public String userListBycondition(Model model, @RequestParam(name = "username", defaultValue = "") String username,
                                        @RequestParam(name = "type", defaultValue = "") String type,
                                        @RequestParam(name = "page", defaultValue = "1")int page)
@@ -61,21 +58,19 @@ public class UserController {
         return "userList";
     }
 
-    @RequestMapping(value = "findUserForPage",method = RequestMethod.POST)
-    @ResponseBody
-    public PageBean findUsersForPage(PageParams params)
+//    @RequestMapping(value="/userPageInfo",method = RequestMethod.POST)
+//    @ResponseBody
+    @PostMapping("/pageInfo")
+    public String pageInfo(@RequestParam(value = "pageNumber") int pageNumber,@RequestParam(value = "pageSize") int pageSize)
     {
-        return userService.findForPage(params);
+        System.out.println("+++++++++++++++++++++++++++++++++");
+        return userService.findByCondition(pageNumber,pageSize);
     }
 
 
 
-    /*@GetMapping(value = "/users")
-    public Page<User> userList(@RequestParam(value = "page")int page)
-    {
-        Page<User> userPage = userService.findAll(page);
-        return userPage;
-    }*/
+    @RequestMapping(value = "/toUsers", method = RequestMethod.GET)
+    public String toUsers(){return "userList";}
 
     /**
      *

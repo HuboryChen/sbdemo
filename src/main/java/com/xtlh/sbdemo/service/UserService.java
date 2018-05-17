@@ -25,4 +25,6 @@ public interface UserService{
 
 
     PageBean findForPage(PageParams params);
+
+    public String findByCondition(int pageNumber, int pageSize);
 }

@@ -1,5 +1,6 @@
 package com.xtlh.sbdemo.service.serviceimpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.repository.UserRepository;
 import com.xtlh.sbdemo.service.UserService;
@@ -20,7 +21,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -69,6 +69,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(querySpecifi, pageable);
     }
 
+    public String findByCondition(int pageNumber, int pageSize)
+    {
+        Pageable pageable = new PageRequest(pageNumber-1, pageSize, new Sort(Sort.Direction.DESC, "id"));
+        Page<User> userPage = userRepository.findAll(pageable);
+        long total = userPage.getTotalElements();
+        List<User> users = userPage.getContent();
+
+        JSONObject result = new JSONObject();
+        result.put("rows",users);
+        result.put("total",total);
+
+        return result.toJSONString();
+    }
+
     @Override
     public User saveUser(User user)
     {
@@ -92,28 +106,29 @@ public class UserServiceImpl implements UserService {
     public PageBean findForPage(PageParams params) {
         Pageable pageable = new PageRequest(params.getOffset()-1, params.getLimit(), new Sort(Sort.Direction.fromString(params.getOrder()), params.getSort()));
 
-        Map map = params.getQueryparam();   //获取查询条件参数
-
-        Specification<User> querySpecifi = new Specification<User>()
-        {
-            @Override
-            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder)
-            {
-                List<Predicate> predicates = new ArrayList<Predicate>();
-                String username = map.get("username").toString();
-                String type = map.get("type").toString();
-                if(!username.equals("") && null != username)
-                {
-                    predicates.add(criteriaBuilder.like(root.get("username"), "%"+username+"%"));
-                }
-                if(!type.equals("") && null != type)
-                {
-                    predicates.add(criteriaBuilder.equal(root.get("type"), type));
-                }
-                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-            }
-        };
-        Page page = userRepository.findAll(querySpecifi, pageable);
+//        Map map = params.getQueryparam();   //获取查询条件参数
+//
+//        Specification<User> querySpecifi = new Specification<User>()
+//        {
+//            @Override
+//            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder)
+//            {
+//                List<Predicate> predicates = new ArrayList<Predicate>();
+//                String username = map.get("username").toString();
+//                String type = map.get("type").toString();
+//                if(!username.equals("") && null != username)
+//                {
+//                    predicates.add(criteriaBuilder.like(root.get("username"), "%"+username+"%"));
+//                }
+//                if(!type.equals("") && null != type)
+//                {
+//                    predicates.add(criteriaBuilder.equal(root.get("type"), type));
+//                }
+//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+//            }
+//        };
+//        Page page = userRepository.findAll(querySpecifi, pageable);
+        Page page = userRepository.findAll( pageable);
         PageBean pageBean = new PageBean(page.getTotalElements(),page.getContent());
         return pageBean;
     }

@@ -1,7 +1,6 @@
 package com.xtlh.sbdemo.util;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @作者 陈坤
@@ -19,7 +18,7 @@ public class PageParams implements Serializable {
     //排序规则
     private String order;
     //条件查询字符串
-    private Map queryparam;
+//    private Map queryparam;
 
     public int getLimit()
     {
@@ -61,7 +60,7 @@ public class PageParams implements Serializable {
         this.order = order;
     }
 
-    public Map getQueryparam()
+    /*public Map getQueryparam()
     {
         return queryparam;
     }
@@ -69,5 +68,5 @@ public class PageParams implements Serializable {
     public void setQueryparam(Map queryparam)
     {
         this.queryparam = queryparam;
-    }
+    }*/
 }
