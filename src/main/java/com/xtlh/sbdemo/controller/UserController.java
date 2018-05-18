@@ -4,27 +4,22 @@ import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @作者 陈坤
  * @创建日期 2018/4/24
  * @功能描述 用户控制器
  */
-@RestController
-//@Controller
+//@RestController
+@Controller
 public class UserController {
     @Autowired
     UserService userService;
-
-    /*@RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String userList(Model model)
-    {
-        List<User> users = userRepository.findAll();
-        model.addAttribute("users",users);
-        return "userList";
-    }*/
 
     /**
      *
@@ -37,7 +32,7 @@ public class UserController {
     {
         Page<User> userPage = userService.findAll(page);
         model.addAttribute("userPage",userPage);
-        return "userList";
+        return "userList1";
     }
 
     /**
@@ -58,19 +53,13 @@ public class UserController {
         return "userList";
     }
 
-//    @RequestMapping(value="/userPageInfo",method = RequestMethod.POST)
-//    @ResponseBody
-    @PostMapping("/pageInfo")
-    public String pageInfo(@RequestParam(value = "pageNumber") int pageNumber,@RequestParam(value = "pageSize") int pageSize)
+    @RequestMapping(value="/userPageInfo",method = RequestMethod.POST)
+    @ResponseBody
+    public String pageInfo(@RequestParam(name = "pageNumber") int pageNumber,@RequestParam(name = "pageSize") int pageSize)
     {
-        System.out.println("+++++++++++++++++++++++++++++++++");
         return userService.findByCondition(pageNumber,pageSize);
     }
 
-
-
-    @RequestMapping(value = "/toUsers", method = RequestMethod.GET)
-    public String toUsers(){return "userList";}
 
     /**
      *
@@ -104,6 +93,15 @@ public class UserController {
         return "success";
     }
 
+    /**
+     *
+     * @作者		陈坤
+     * @创建日期	2018/5/18 16:58
+     * @功能描述	跳转到修改页面
+     * @参数
+     * @返回值
+     *
+     */
     @RequestMapping(value = "/toModify", method = RequestMethod.GET)
     public String toModify(Long id, Model model)
     {
@@ -126,6 +124,23 @@ public class UserController {
     {
         userService.deleteUser(id);
         return "redirect:/users";
+    }
+
+    /**
+     *
+     * @作者		陈坤
+     * @创建日期	2018/5/18 16:54
+     * @功能描述	批量删除用户
+     * @参数
+     * @返回值
+     *
+     */
+    @RequestMapping(value = "/deleteInBatchUser",method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteInBatchUser(@RequestBody List<User> requestList)
+    {
+        userService.deleteInBatch(requestList);
+        return "success";
     }
 
 }

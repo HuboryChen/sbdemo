@@ -54,7 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
      */
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/","/home").permitAll()
                 .anyRequest().permitAll()       //任何请求，任意访问
                 .and()
