@@ -52,7 +52,7 @@ public class MyAuthenticationSuccesshandler extends SavedRequestAwareAuthenticat
             url = savedRequest.getRedirectUrl();
         }
         if(url == null){
-            getRedirectStrategy().sendRedirect(request,response,"/home");
+            getRedirectStrategy().sendRedirect(request,response,"/index");
         }
         super.onAuthenticationSuccess(request, response, authentication);
     }

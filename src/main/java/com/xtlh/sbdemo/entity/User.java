@@ -1,6 +1,8 @@
 package com.xtlh.sbdemo.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @作者 陈坤
@@ -8,25 +10,31 @@ import javax.persistence.*;
  * @功能描述 用户实体类
  */
 @Entity
-public class User {
+@Table(name = "user")
+public class User implements Serializable{
     private Long id;    //自动id
     private String username;    //用户名
     private String password;    //用户密码
     private String type;        //用户类型
     private int status;         //账户状态
 
+    private List<SysRole> roles;
+
+
+
     public User(){}         //空构造函数
 
-    public User(String username, String password, String type, int status) {
+    public User(String username, String password, String type, int status,List<SysRole> roles) {
         this.username = username;
         this.password = password;
         this.type = type;
         this.status = status;
+        this.roles = roles;
     }
 
     @Id
     @Column(name = "id",nullable = false, unique = true,length = 11)
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     public Long getId() {
         return id;
     }
@@ -73,5 +81,17 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "sys_role_user",
+        joinColumns = {@JoinColumn(name = "sys_user_id")},
+        inverseJoinColumns = {@JoinColumn(name = "sys_role_id")})
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 }

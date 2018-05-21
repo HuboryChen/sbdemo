@@ -28,4 +28,6 @@ public interface UserService{
     String findByCondition(int pageNumber, int pageSize);
 
     void deleteInBatch(List<User> list); //批量删除用户
+
+    User findByUsername(String username);   //根据用户名查找用户对象
 }

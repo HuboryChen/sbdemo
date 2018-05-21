@@ -54,7 +54,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>();
         ConfigAttribute ca = new SecurityConfig("ROLE_USER");
         array.add(ca);
-        map.put("/userList.html", array);
+        map.put("/index.html", array);
 
         Collection<ConfigAttribute> arrayno = new ArrayList<ConfigAttribute>();
         ConfigAttribute cano = new SecurityConfig("ROLE_NO");

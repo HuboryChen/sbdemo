@@ -54,25 +54,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
      */
     protected void configure(HttpSecurity http) throws Exception
     {
-        http
-                .csrf().disable()
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/home").permitAll()
-                .anyRequest().permitAll()       //任何请求，任意访问
+                .antMatchers("/css/**","/fonts/**","/img/**","/js/**","plugins/**").permitAll()
+//                .anyRequest().permitAll()       //任何请求，任意访问
+//                .and()
+//                .headers().frameOptions().sameOrigin();
+                .anyRequest().authenticated()       //任何请求，登录后可以访问
                 .and()
-                .headers().frameOptions().sameOrigin();
-//                .anyRequest().authenticated()       //任何请求，登录后可以访问
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .failureUrl("/login?error")
-//                .permitAll()    //登录页面用户任意访问
-//                .defaultSuccessUrl("/home")
-//                .successHandler(myAuthenticationSuccesshandler())
-//                .and()
-//                .headers().frameOptions().disable()   //项目中用到iframe嵌入网页，然后用到springsecurity就被拦截了 浏览器报错  x-frame-options deny
-//                .and()
-//                .logout().permitAll();  //注销行为任意访问
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .permitAll()    //登录页面用户任意访问
+                .defaultSuccessUrl("/index")
+                .successHandler(myAuthenticationSuccesshandler())
+                .and()
+                .headers().frameOptions().sameOrigin()   //项目中用到iframe嵌入网页，然后用到springsecurity就被拦截了 浏览器报错  x-frame-options deny
+                .and()
+                .logout().permitAll();  //注销行为任意访问
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     }
 
