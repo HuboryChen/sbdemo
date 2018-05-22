@@ -4,11 +4,10 @@ import com.xtlh.sbdemo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository("userRepository")
-public interface UserRepository extends JpaRepository<User, Long>, PagingAndSortingRepository<User, Long>,JpaSpecificationExecutor {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor {
 //    User findById(long id);
 //    void deleteById(Long id);
 //

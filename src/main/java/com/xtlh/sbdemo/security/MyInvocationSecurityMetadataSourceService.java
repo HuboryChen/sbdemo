@@ -1,5 +1,9 @@
 package com.xtlh.sbdemo.security;
 
+import com.xtlh.sbdemo.entity.SysPermission;
+import com.xtlh.sbdemo.repository.PermissionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -8,10 +12,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @作者 陈坤
@@ -21,13 +22,14 @@ import java.util.Iterator;
 @Service
 public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 
-//    @Autowired
-//    private PermissionDao permissionDao;
+    @Qualifier("permissionRepository")
+    @Autowired
+    private PermissionRepository permissionRepository;  //注入权限类持久层
 
-    private HashMap<String, Collection<ConfigAttribute>> map = null;    //注入权限类持久层
+    private HashMap<String, Collection<ConfigAttribute>> map = null;
 
     //构造函数中初始化loadResourceDefine()，tomcat启动时实例化一次
-    public MyInvocationSecurityMetadataSourceService(){loadResourceDefine();}
+    public MyInvocationSecurityMetadataSourceService(){this.loadResourceDefine();}
 
     /**
      *
@@ -48,8 +50,8 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
      */
     public void loadResourceDefine()
     {
-        //测试：方法中定义
-        map = new HashMap<>();
+        //测试：方法中临时定义
+        /*map = new HashMap<>();
         ConfigAttribute cfg;
         Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>();
         ConfigAttribute ca = new SecurityConfig("ROLE_USER");
@@ -59,27 +61,38 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         Collection<ConfigAttribute> arrayno = new ArrayList<ConfigAttribute>();
         ConfigAttribute cano = new SecurityConfig("ROLE_NO");
         arrayno.add(cano);
-        map.put("/other.html", arrayno);
+        map.put("/other.html", arrayno);*/
 
 
         //生产：从数据库获取
-    /*
         map = new HashMap<>();
         Collection<ConfigAttribute> array;
         ConfigAttribute cfg;
 
-        List<Permission> permissions = permissionDao.findAll();   //从数据库表中查找所有的权限信息
-        for (Permission permission : permissions)
+        List<SysPermission> permissions = permissionRepository.findAll();   //从数据库表中查找所有的权限信息
+        for (SysPermission permission : permissions)
         {
             array = new ArrayList();
             cfg = new SecurityConfig(permission.getName());
+            //此处指添加了角色名，其实还可以添加更多地权限信息，例如请求方法到ConfigAttribute的集合中去
             array.add(cfg);
-            map.put(permission.getUrl, array);
-        }*/
+            //用权限的getUrl() 作为map的key，用ConfigAttribute的集合作为 value
+            map.put(permission.getUrl(), array);
+        }
 
     }
 
-
+    /**
+     * 
+     * @作者		陈坤
+     * @创建日期	2018/5/22 16:37
+     * @功能描述	判断用户请求的Url是否在权限表中
+     *              （如果在权限表中，则返回给decide方法，用来判定用户是否有此权限；
+     *                如果不在权限表中，则放行。）
+     * @参数  object：用户请求
+     * @返回值
+     *
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         //object中包含用户请求的request信息

@@ -1,8 +1,11 @@
 package com.xtlh.sbdemo.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @作者 陈坤
@@ -18,19 +21,9 @@ public class User implements Serializable{
     private String type;        //用户类型
     private int status;         //账户状态
 
-    private List<SysRole> roles;
-
-
+    private Set<SysRole> roles;
 
     public User(){}         //空构造函数
-
-    public User(String username, String password, String type, int status,List<SysRole> roles) {
-        this.username = username;
-        this.password = password;
-        this.type = type;
-        this.status = status;
-        this.roles = roles;
-    }
 
     @Id
     @Column(name = "id",nullable = false, unique = true,length = 11)
@@ -83,15 +76,16 @@ public class User implements Serializable{
         this.status = status;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "sys_role_user",
         joinColumns = {@JoinColumn(name = "sys_user_id")},
         inverseJoinColumns = {@JoinColumn(name = "sys_role_id")})
-    public List<SysRole> getRoles() {
+    public Set<SysRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<SysRole> roles) {
+    public void setRoles(Set<SysRole> roles) {
         this.roles = roles;
     }
 }

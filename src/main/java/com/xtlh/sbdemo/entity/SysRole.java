@@ -1,8 +1,11 @@
 package com.xtlh.sbdemo.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @作者 陈坤
@@ -15,7 +18,8 @@ public class SysRole implements Serializable{
 
     private Integer id;     //角色id
     private String name;    //角色名
-    private List<User> users;
+    private Set<User> users;
+    private Set<SysPermission> permissions;
 
     @Id
     @Column(name = "id",nullable = false, unique = true,length = 11)
@@ -37,15 +41,29 @@ public class SysRole implements Serializable{
         this.name = name;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "sys_role_user",
             joinColumns = {@JoinColumn(name = "sys_role_id")},
             inverseJoinColumns = {@JoinColumn(name = "sys_user_id")})
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "sys_permission_role",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    public Set<SysPermission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<SysPermission> permissions) {
+        this.permissions = permissions;
     }
 }
