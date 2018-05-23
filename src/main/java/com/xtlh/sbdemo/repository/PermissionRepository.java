@@ -16,9 +16,10 @@ import java.util.List;
 @Repository("permissionRepository")
 public interface PermissionRepository extends JpaRepository<SysPermission, Long>, JpaSpecificationExecutor {
     @Override
+    @Query(value = "select * from sys_permission", nativeQuery = true)
     List<SysPermission> findAll();
 
-    @Query(value = "select p.* from user " +
+    @Query(value = "select p.* from user u " +
             "left join  sys_role_user sru on u.id=sru.sys_user_id " +
             "left join sys_role r on sru.sys_role_id=r.id " +
             "left join sys_permission_role spr on spr.role_id=r.id " +

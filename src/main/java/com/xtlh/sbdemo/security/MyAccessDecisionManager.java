@@ -47,6 +47,8 @@ public class MyAccessDecisionManager implements AccessDecisionManager{
             needRole = c.getAttribute();
             for (GrantedAuthority ga : authentication.getAuthorities()) //authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
             {
+                System.out.println("needRole=permission.getName()="+needRole.trim());
+                System.out.println("ga.getAuthority()=permission.getName()="+ga.getAuthority());
                 if(needRole.trim().equals(ga.getAuthority()))
                 {
                     return;

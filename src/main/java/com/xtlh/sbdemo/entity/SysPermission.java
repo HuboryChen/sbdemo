@@ -1,8 +1,5 @@
 package com.xtlh.sbdemo.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -70,8 +67,7 @@ public class SysPermission implements Serializable{
         this.pid = pid;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_permission_role",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})

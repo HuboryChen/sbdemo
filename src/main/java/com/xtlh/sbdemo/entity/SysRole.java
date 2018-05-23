@@ -1,8 +1,5 @@
 package com.xtlh.sbdemo.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -41,8 +38,7 @@ public class SysRole implements Serializable{
         this.name = name;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_role_user",
             joinColumns = {@JoinColumn(name = "sys_role_id")},
             inverseJoinColumns = {@JoinColumn(name = "sys_user_id")})
@@ -54,8 +50,7 @@ public class SysRole implements Serializable{
         this.users = users;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_permission_role",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})

@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * @作者 陈坤
  * @创建日期 2018/5/14
- * @功能描述 保存登录前的请求资源，登录后重定向至该资源
+ * @功能描述 登录前若有要请求的资源，登录时则保存该资源，登录后重定向至该资源；若没有，则默认为index
  */
 @Service
 public class MyAuthenticationSuccesshandler extends SavedRequestAwareAuthenticationSuccessHandler {

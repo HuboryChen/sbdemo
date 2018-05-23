@@ -65,13 +65,6 @@ public class MyUserDetailService implements UserDetailsService{
 
         }
 
-        /*List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-        //用与添加用户的权限，只要把用户权限添加到authorities
-        for (SysRole role:user.getRoles())
-        {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-            System.out.println(role.getName());
-        }*/
         String pw = new BCryptPasswordEncoder().encode(user.getPassword());
         return new org.springframework.security.core.userdetails.User(username, pw, true, true, true, true, grantedAuthorities);
     }

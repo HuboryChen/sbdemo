@@ -29,7 +29,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
     private HashMap<String, Collection<ConfigAttribute>> map = null;
 
     //构造函数中初始化loadResourceDefine()，tomcat启动时实例化一次
-    public MyInvocationSecurityMetadataSourceService(){this.loadResourceDefine();}
+    public MyInvocationSecurityMetadataSourceService(){}
 
     /**
      *
@@ -50,20 +50,6 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
      */
     public void loadResourceDefine()
     {
-        //测试：方法中临时定义
-        /*map = new HashMap<>();
-        ConfigAttribute cfg;
-        Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>();
-        ConfigAttribute ca = new SecurityConfig("ROLE_USER");
-        array.add(ca);
-        map.put("/index.html", array);
-
-        Collection<ConfigAttribute> arrayno = new ArrayList<ConfigAttribute>();
-        ConfigAttribute cano = new SecurityConfig("ROLE_NO");
-        arrayno.add(cano);
-        map.put("/other.html", arrayno);*/
-
-
         //生产：从数据库获取
         map = new HashMap<>();
         Collection<ConfigAttribute> array;
@@ -74,7 +60,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         {
             array = new ArrayList();
             cfg = new SecurityConfig(permission.getName());
-            //此处指添加了角色名，其实还可以添加更多地权限信息，例如请求方法到ConfigAttribute的集合中去
+            //此处指添加了权限名，其实还可以添加更多地权限信息，例如请求方法到ConfigAttribute的集合中去
             array.add(cfg);
             //用权限的getUrl() 作为map的key，用ConfigAttribute的集合作为 value
             map.put(permission.getUrl(), array);
@@ -95,6 +81,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+        if(map == null) this.loadResourceDefine();
         //object中包含用户请求的request信息
         HttpServletRequest request =((FilterInvocation) object).getHttpRequest();
         AntPathRequestMatcher matcher;
@@ -105,6 +92,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
             matcher = new AntPathRequestMatcher(resUrl);
             if(matcher.matches(request))
             {
+                System.out.println("map.get(resUrl)========================="+map.get(resUrl));
                 return map.get(resUrl);
             }
         }

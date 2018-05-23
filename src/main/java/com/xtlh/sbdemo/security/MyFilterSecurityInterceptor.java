@@ -2,10 +2,10 @@ package com.xtlh.sbdemo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
-import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.*;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * @功能描述 访问资源拦截器
  */
 @Service
-public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
+public class MyFilterSecurityInterceptor extends FilterSecurityInterceptor implements Filter {
 
     //配置文件注入
     @Autowired

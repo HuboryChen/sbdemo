@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title>H+ 后台主题UI框架 - 主页</title>
+    <title sec:authorize="name">H+ 后台主题UI框架 - 主页</title>
 
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
@@ -36,7 +36,7 @@
                             <span><img alt="image" class="img-circle" th:src="@{/img/profile_small.jpg}" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold" >Beaut-zihan</strong></span>
                                 <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
                             </a>
@@ -64,20 +64,11 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
-                            <li>
+                            <li sec:authorize-url="/index_v1.html">
                                 <a class="J_menuItem" th:href="@{index_v1.html}" data-index="0">主页示例一</a>
                             </li>
-                            <li>
+                            <li  sec:authorize-url="/userlist.html">
                                 <a class="J_menuItem" href="/userlist.html">用户管理</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/404.html">主页示例三</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/index_v2.html">主页示例四</a>
-                            </li>
-                            <li>
-                                <a href="index_v5.html" target="_blank">主页示例五</a>
                             </li>
                         </ul>
 
