@@ -17,7 +17,7 @@ import java.io.IOException;
  * @功能描述 访问资源拦截器
  */
 @Service
-public class MyFilterSecurityInterceptor extends FilterSecurityInterceptor implements Filter {
+public class MyFilterSecurityInterceptor extends FilterSecurityInterceptor{
 
     //配置文件注入
     @Autowired

@@ -28,9 +28,6 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 
     private HashMap<String, Collection<ConfigAttribute>> map = null;
 
-    //构造函数中初始化loadResourceDefine()，tomcat启动时实例化一次
-    public MyInvocationSecurityMetadataSourceService(){}
-
     /**
      *
      * @作者		陈坤
