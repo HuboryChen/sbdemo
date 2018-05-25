@@ -15,7 +15,7 @@ public class SysRole implements Serializable{
 
     private Integer id;     //角色id
     private String name;    //角色名
-    private Set<User> users;
+//    private Set<User> users;
     private Set<SysPermission> permissions;
 
     @Id
@@ -38,7 +38,7 @@ public class SysRole implements Serializable{
         this.name = name;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    /*@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_role_user",
             joinColumns = {@JoinColumn(name = "sys_role_id")},
             inverseJoinColumns = {@JoinColumn(name = "sys_user_id")})
@@ -46,9 +46,8 @@ public class SysRole implements Serializable{
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    public void setUsers(Set<User> users) {this.users = users;    }
+*/
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_permission_role",

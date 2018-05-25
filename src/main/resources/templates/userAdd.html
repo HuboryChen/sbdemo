@@ -4,12 +4,36 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
     <script  src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script  src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
     <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
     <style>
         .form-inline label{ justify-content: right; }
     </style>
+    <script>
+        $(function () {
+            $("#roles").empty();
+            var optionstring = "";
+            $.ajax({
+                url: '/roles',
+                type: 'get',
+                dataType: "json",
+                success:function (data) {
+                    $.each(data, function (key, value) {
+                        optionstring += "<option value='"+value.id+"'>"+value.name+"</option>";
+                    });
+                    $("#roles").append(optionstring);
+                }
+            })
+        })
+    </script>
 </head>
 <body class="container">
     <div id="userData" class="panel panel-default ">
@@ -40,6 +64,13 @@
                     <option value="业务员">业务员</option>
                     <option value="超级管理员">超级管理员</option>
                 </select>
+            </div>
+
+            <div class="form-group form-inline">
+                <div  class="col-sm-3 form-label ">
+                    <label for="type" class="text-right">角色类型：</label>
+                </div>
+                <select type="text" class="col-sm-8 form-control" id="roles" name="roles"  th:field="*{roles}" placeholder="请选择角色类型"></select>
             </div>
 
             <div class="form-group form-inline">

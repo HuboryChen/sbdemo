@@ -2,7 +2,6 @@ package com.xtlh.sbdemo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @作者 陈坤
@@ -18,7 +17,7 @@ public class SysPermission implements Serializable{
     private String url;     //授权链接
     private Integer pid;    //父节点id
 
-    private Set<SysRole> roles;
+//    private Set<SysRole> roles;
 
     @Id
     @Column(name = "id",nullable = false, unique = true,length = 11)
@@ -67,7 +66,7 @@ public class SysPermission implements Serializable{
         this.pid = pid;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  /*  @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "sys_permission_role",
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
@@ -77,5 +76,5 @@ public class SysPermission implements Serializable{
 
     public void setRoles(Set<SysRole> roles) {
         this.roles = roles;
-    }
+    }*/
 }

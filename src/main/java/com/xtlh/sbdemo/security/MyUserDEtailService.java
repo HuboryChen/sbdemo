@@ -65,7 +65,7 @@ public class MyUserDetailService implements UserDetailsService{
 
         }
 
-//        String pw = new BCryptPasswordEncoder().encode(user.getPassword());
-        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true, true, true, grantedAuthorities);
+        String pw = new BCryptPasswordEncoder().encode(user.getPassword());
+        return new org.springframework.security.core.userdetails.User(username, pw, true, true, true, true, grantedAuthorities);
     }
 }
