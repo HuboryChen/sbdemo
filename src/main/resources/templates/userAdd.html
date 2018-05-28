@@ -6,20 +6,16 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css" />
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/css/plugins/chosen/chosen.css">
     <script  src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script  src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
     <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+    <script src="/js/plugins/chosen/chosen.jquery.js"></script>
     <style>
         .form-inline label{ justify-content: right; }
     </style>
     <script>
         $(function () {
-            $("#roles").empty();
             var optionstring = "";
             $.ajax({
                 url: '/roles',
@@ -27,7 +23,8 @@
                 dataType: "json",
                 success:function (data) {
                     $.each(data, function (key, value) {
-                        optionstring += "<option value='"+value.id+"'>"+value.name+"</option>";
+                        /*optionstring += "<option value='"+value.id+"'>"+value.name+"</option>";*/
+                        optionstring += "<label class='checkbox-line'><input type='checkbox' name='roles' th:field='*{roles}' value='"+value.id+"'>"+value.name+"</label>&nbsp;&nbsp;";
                     });
                     $("#roles").append(optionstring);
                 }
@@ -66,11 +63,12 @@
                 </select>
             </div>
 
-            <div class="form-group form-inline">
+            <div id="roles" class="form-group form-inline">
                 <div  class="col-sm-3 form-label ">
                     <label for="type" class="text-right">角色类型：</label>
                 </div>
-                <select type="text" class="col-sm-8 form-control" id="roles" name="roles"  th:field="*{roles}" placeholder="请选择角色类型"></select>
+                <!--<label class='checkbox-line'><input type='checkbox' value='role_id'>管理员</label>-->
+                <!--<select type="text" multiple class="chosen-select col-sm-8 form-control" id="roles" name="roles"  th:field="*{roles}" placeholder="请选择角色类型"></select>-->
             </div>
 
             <div class="form-group form-inline">
@@ -97,6 +95,7 @@
         $("#btn_save").click(function () {
             var url = $("#user_form").attr("action");
             var param = $("#user_form").serialize();
+            alert(param);
             $.ajax({
                 type: "post",
                 url: url,
@@ -104,8 +103,6 @@
                 complete: function () {
                     parent.window.location.reload();
                     parent.layer.closeAll();
-                    // console.log("hjsdhsjdhj");
-
                 }
             })
         })

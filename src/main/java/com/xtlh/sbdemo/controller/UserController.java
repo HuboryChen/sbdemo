@@ -1,5 +1,6 @@
 package com.xtlh.sbdemo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,8 @@ public class UserController {
     @ResponseBody
     public String saveUser(@ModelAttribute(value = "user")  User user)
     {
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("user表单数据"+jsonObject.toJSONString(user));
         userService.saveUser(user);
         return "success";
     }
@@ -106,6 +109,7 @@ public class UserController {
     public String toModify(Long id, Model model)
     {
         User user = userService.findById(id);
+        System.out.println("============================="+new JSONObject().toJSONString(user));
         model.addAttribute("user",user);
         return "userAdd";
     }

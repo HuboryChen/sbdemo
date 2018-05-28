@@ -66,11 +66,8 @@ public class SysPermission implements Serializable{
         this.pid = pid;
     }
 
-  /*  @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "sys_permission_role",
-            joinColumns = {@JoinColumn(name = "permission_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    public Set<SysRole> getRoles() {
+//    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "permissions",targetEntity = SysRole.class)
+   /* public Set<SysRole> getRoles() {
         return roles;
     }
 

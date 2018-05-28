@@ -38,18 +38,14 @@ public class SysRole implements Serializable{
         this.name = name;
     }
 
-    /*@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "sys_role_user",
-            joinColumns = {@JoinColumn(name = "sys_role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sys_user_id")})
+    /*@ManyToMany(cascade = CascadeType.ALL,mappedBy = "roles",targetEntity = User.class)
     public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {this.users = users;    }
-*/
+    public void setUsers(Set<User> users) {this.users = users;    }*/
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "sys_permission_role",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")})
