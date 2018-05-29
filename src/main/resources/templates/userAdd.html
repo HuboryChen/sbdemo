@@ -23,8 +23,7 @@
                 dataType: "json",
                 success:function (data) {
                     $.each(data, function (key, value) {
-                        /*optionstring += "<option value='"+value.id+"'>"+value.name+"</option>";*/
-                        optionstring += "<label class='checkbox-line'><input type='checkbox' name='roles' th:field='*{roles}' value='"+value.id+"'>"+value.name+"</label>&nbsp;&nbsp;";
+                        optionstring += "<label class='checkbox-line'><input type='checkbox' name='roles["+key+"].id' th:field='*{roles["+key+"}.id'  value='"+value.id+"'>"+value.name+"</label>&nbsp;&nbsp;";
                     });
                     $("#roles").append(optionstring);
                 }

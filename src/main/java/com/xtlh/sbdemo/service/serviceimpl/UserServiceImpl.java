@@ -1,6 +1,7 @@
 package com.xtlh.sbdemo.service.serviceimpl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xtlh.sbdemo.entity.SysRole;
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.repository.UserRepository;
 import com.xtlh.sbdemo.service.UserService;
@@ -99,6 +100,19 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user)
     {
 //        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        List<SysRole> roles = user.getRoles();
+
+        for (int i = 0; i< roles.size(); i++)
+        {
+            if(roles.get(i).getId() == null)
+            {
+                roles.remove(roles.get(i));
+                break;
+            }
+
+        }
+        user.setRoles(roles);
+        System.out.println("roles:"+new JSONObject().toJSONString(roles));
         return userRepository.save(user);
     }
 

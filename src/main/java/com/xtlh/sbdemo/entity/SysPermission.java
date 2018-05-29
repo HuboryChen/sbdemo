@@ -17,7 +17,6 @@ public class SysPermission implements Serializable{
     private String url;     //授权链接
     private Integer pid;    //父节点id
 
-//    private Set<SysRole> roles;
 
     @Id
     @Column(name = "id",nullable = false, unique = true,length = 11)
@@ -65,13 +64,4 @@ public class SysPermission implements Serializable{
     public void setPid(Integer pid) {
         this.pid = pid;
     }
-
-//    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "permissions",targetEntity = SysRole.class)
-   /* public Set<SysRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<SysRole> roles) {
-        this.roles = roles;
-    }*/
 }

@@ -2,7 +2,7 @@ package com.xtlh.sbdemo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @作者 陈坤
@@ -18,7 +18,7 @@ public class User implements Serializable{
     private String type;        //用户类型
     private int status;         //账户状态
 
-    private Set<SysRole> roles;
+    private List<SysRole> roles;
 
     public User(){}         //空构造函数
 
@@ -77,11 +77,11 @@ public class User implements Serializable{
     @JoinTable(name = "sys_role_user",
         joinColumns = {@JoinColumn(name = "sys_user_id")},
         inverseJoinColumns = {@JoinColumn(name = "sys_role_id")})
-    public Set<SysRole> getRoles() {
+    public List<SysRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<SysRole> roles) {
+    public void setRoles(List<SysRole> roles) {
         this.roles = roles;
     }
 }
