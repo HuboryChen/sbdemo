@@ -1,7 +1,5 @@
 package com.xtlh.sbdemo.entity;
 
-import javax.persistence.Entity;
-
 /**
  * @作者 陈坤
  * @创建日期 2018/5/11

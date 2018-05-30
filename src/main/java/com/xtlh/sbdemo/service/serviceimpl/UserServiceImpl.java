@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -99,7 +100,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user)
     {
-//        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         List<SysRole> roles = user.getRoles();
 
         for (int i = 0; i< roles.size(); i++)
@@ -112,7 +113,6 @@ public class UserServiceImpl implements UserService {
 
         }
         user.setRoles(roles);
-        System.out.println("roles:"+new JSONObject().toJSONString(roles));
         return userRepository.save(user);
     }
 

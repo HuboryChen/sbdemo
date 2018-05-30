@@ -14,7 +14,8 @@
     <style>
         .form-inline label{ justify-content: right; }
     </style>
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
         $(function () {
             var optionstring = "";
             $.ajax({
@@ -22,13 +23,20 @@
                 type: 'get',
                 dataType: "json",
                 success:function (data) {
-                    $.each(data, function (key, value) {
-                        optionstring += "<label class='checkbox-line'><input type='checkbox' name='roles["+key+"].id' th:field='*{roles["+key+"}.id'  value='"+value.id+"'>"+value.name+"</label>&nbsp;&nbsp;";
+                    var roles = /*[[${user.roles}]]*/null;
+                    var array = new Array();
+                    $.each(roles,function (index,value,arr) {
+                        array[index] = value.id;
                     });
+                    $.each(data, function (key, value) {
+                        optionstring += "<label class='checkbox-line'><input type='checkbox' name='roles["+key+"].id' value='"+value.id+"'  "+(array.indexOf(value.id) != -1? 'checked':'')+">"+value.name+"</label>&nbsp;&nbsp;";
+                    });
+
                     $("#roles").append(optionstring);
                 }
             })
         })
+        /*]]>*/
     </script>
 </head>
 <body class="container">
@@ -66,8 +74,6 @@
                 <div  class="col-sm-3 form-label ">
                     <label for="type" class="text-right">角色类型：</label>
                 </div>
-                <!--<label class='checkbox-line'><input type='checkbox' value='role_id'>管理员</label>-->
-                <!--<select type="text" multiple class="chosen-select col-sm-8 form-control" id="roles" name="roles"  th:field="*{roles}" placeholder="请选择角色类型"></select>-->
             </div>
 
             <div class="form-group form-inline">
@@ -94,7 +100,6 @@
         $("#btn_save").click(function () {
             var url = $("#user_form").attr("action");
             var param = $("#user_form").serialize();
-            alert(param);
             $.ajax({
                 type: "post",
                 url: url,
