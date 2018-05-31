@@ -38,11 +38,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<!--druid 依赖-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.1.10</version>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.9</version>
 		</dependency>
 
 
