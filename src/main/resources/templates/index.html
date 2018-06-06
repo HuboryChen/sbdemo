@@ -73,6 +73,9 @@
                             <li  sec:authorize-url="/druid">
                                 <a class="J_menuItem" href="/druid">数据源监控</a>
                             </li>
+                            <li  sec:authorize-url="/index_v2.html">
+                                <a class="J_menuItem" th:href="@{/index_v2.html}">Redis数据列表</a>
+                            </li>
                         </ul>
                         <!--<ul class="nav nav-second-level">
                             <li sec:authorize="hasAuthority('主页示例一')" >
