@@ -1,14 +1,20 @@
 package com.xtlh.sbdemo.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import com.xtlh.sbdemo.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.*;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.*;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @作者 陈坤
@@ -16,96 +22,66 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @功能描述 Redis配置
  */
 @Configuration
-@EnableAutoConfiguration
+@EnableCaching
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RedisConfig extends CachingConfigurerSupport{
-//
-//    private static JedisPool jedisPool = null;
-//
-//    @Value("${spring.redis.host}")
-//    private static String host;         //Redis服务器地址
-//
-//    @Value("${spring.redis.port}")
-//    private static int port;         //Redis服务器端口
-//
-//    @Value("${spring.redis.password}")
-//    private static String password;     //Redis服务器密码
-//
-//    @Value("${spring.redis.timeout}")   //连接超时时间（毫秒）
-//    private static int timeout;
 
-    //初始化Redis连接池
-//    static {
-//        try{
-//            JedisPoolConfig config = getRedisConfig();
-//            jedisPool = new JedisPool(config, host, port,timeout, password);
-//        }catch (Exception e){e.printStackTrace();}
-//    }
+    private static JedisPool jedisPool = null;
+
+    @Value("${spring.redis.host}")
+    private  String host;         //Redis服务器地址
+
+    @Value("${spring.redis.port}")
+    private  int port;         //Redis服务器端口
+
+    @Value("${spring.redis.password}")
+    private  String password;     //Redis服务器密码
+
+    @Value("${spring.redis.timeout}")   //连接超时时间（毫秒）
+    private  int timeout;
+
+
+    /**
+     * 
+     * @作者		陈坤
+     * @创建日期	2018/6/7 12:05
+     * @功能描述	JedisConnectionFactory 配置
+     * @参数  
+     * @返回值
+     *
+     */
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig)
+    {
+        System.out.println("JedisConnectionFactory start...........................");
+        System.out.println("host="+host+",port="+port+",password="+password+",timeout="+timeout);
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
+        jedisConnectionFactory.setPoolConfig(jedisPoolConfig);  //连接池
+        jedisConnectionFactory.setHostName(host);       //服务器地址
+        jedisConnectionFactory.setPort(port);           //端口号
+        jedisConnectionFactory.setPassword(password);   //密码
+        jedisConnectionFactory.setTimeout(timeout);     //客户端超时时间（单位是毫秒）
+        return jedisConnectionFactory;
+    }
 
     /**
      *
      * @作者		陈坤
      * @创建日期	2018/6/6 10:29
-     * @功能描述	注入配置文件中的redis连接池配置
+     * @功能描述	注入配置文件中的JedisPoolConfig配置
      * @参数
      * @返回值
      *
      */
-//    @Bean
-//    @ConfigurationProperties(prefix = "spring.redis")
-//    public static  JedisPoolConfig getRedisConfig()
-//    {
-//        JedisPoolConfig config = new JedisPoolConfig();
-//        return config;
-//    }
+    @Bean
+    @ConfigurationProperties(prefix = "spring.redis.jedis.pool")
+    public static  JedisPoolConfig getRedisConfig()
+    {
+        System.out.println("JedisPoolConfig start...........................");
+        JedisPoolConfig config = new JedisPoolConfig();
+        return config;
+    }
 
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/6 12:21
-     * @功能描述	获取redis实例
-     * @参数
-     * @返回值     Jedis实例
-     *
-     */
-//    public synchronized static Jedis getJedis()
-//    {
-//        try{
-//            if(jedisPool != null)
-//            {
-//                Jedis resource = jedisPool.getResource();
-//                return resource;
-//            }else{return null;}
-//        }catch (Exception e)
-//        {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/6 12:25
-     * @功能描述	释放jedis资源
-     * @参数
-     * @返回值
-     *
-     */
-//    public static void close(final Jedis jedis)
-//    {
-//        if(jedis != null)
-//        {
-//            jedis.close();
-//        }
-//    }
-
-
-    /**
-     * 注入 RedisConnectionFactory
-     */
-    @Autowired
-    RedisConnectionFactory redisConnectionFactory ;
 
     /**
      *
@@ -117,7 +93,7 @@ public class RedisConfig extends CachingConfigurerSupport{
      *
      */
     @Bean
-    public RedisTemplate<String, Object> functionDomainRedisTemplate()
+    public RedisTemplate<String, Object> functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory)
     {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
@@ -128,7 +104,7 @@ public class RedisConfig extends CachingConfigurerSupport{
      *
      * @作者		陈坤
      * @创建日期	2018/6/5 15:43
-     * @功能描述	设置数据存入redis的序列化方式
+     * @功能描述	设置数据存入redis的序列化方式，并开启事务
      * @参数     RedisTemplate
      * @参数      factory
      * @返回值     空值
@@ -136,89 +112,36 @@ public class RedisConfig extends CachingConfigurerSupport{
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory)
     {
+        /*
+        JdkSerializationRedisSerializer——使用Java自带的序列化机制将对象序列化为一个字符串
+        OxmSerializer——将对象序列化为xml字符串
+        Jackson2JsonRedisSerializer——将对象序列化为json字符串
+        */
+        //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
-        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        //开启事务
+        redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.setConnectionFactory(factory);
     }
 
     /**
      *
      * @作者		陈坤
-     * @创建日期	2018/6/5 15:51
-     * @功能描述	实例化HashOperations对象，可以使用Hash类型操作
-     * @参数  RedisTemplate
-     * @返回值 HashOperations对象
+     * @创建日期	2018/6/7 12:12
+     * @功能描述	注入封装RedisTemplate
+     * @参数
+     * @返回值
      *
      */
-    @Bean
-    public HashOperations<String, String, Object> hashOperations(RedisTemplate<String, Object> redisTemplate)
+    @Bean(name = "redisUtil")
+    public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate)
     {
-        return redisTemplate.opsForHash();
+        RedisUtil redisUtil = new RedisUtil();
+        redisUtil.setRedisTemplate(redisTemplate);
+        return redisUtil;
     }
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/5 15:54
-     * @功能描述	实例化ValueOperations对象，可以使用String操作
-     * @参数  redisTemplate
-     * @返回值 ValueOperations
-     *
-     */
-    @Bean
-    public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate)
-    {
-        return redisTemplate.opsForValue();
-    }
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/5 15:55
-     * @功能描述	实例化ListOperations对象，可以使用List操作
-     * @参数  redisTemplate
-     * @返回值 ListOperations对象
-     *
-     */
-    @Bean
-    public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate)
-    {
-        return redisTemplate.opsForList();
-    }
-
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/5 15:57
-     * @功能描述	实例化SetOperations对象，可以使用Set操作
-     * @参数  RedisTemplate
-     * @返回值 SetOperations对象
-     *
-     */
-    @Bean
-    public SetOperations<String, Object> setOperations(RedisTemplate<String, Object> redisTemplate)
-    {
-        return redisTemplate.opsForSet();
-    }
-
-    /**
-     *
-     * @作者		陈坤
-     * @创建日期	2018/6/5 16:00
-     * @功能描述	实例化ZSetOperations对象，可以使用ZSet操作
-     * @参数  redisTemplate
-     * @返回值 ZSetOperations对象
-     *
-     */
-    @Bean
-    public ZSetOperations<String, Object> zSetOperations(RedisTemplate<String, Object> redisTemplate)
-    {
-        return redisTemplate.opsForZSet();
-    }
-
-
 
 }

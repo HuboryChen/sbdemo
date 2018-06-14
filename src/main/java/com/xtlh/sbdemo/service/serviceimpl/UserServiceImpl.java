@@ -7,6 +7,7 @@ import com.xtlh.sbdemo.repository.UserRepository;
 import com.xtlh.sbdemo.service.UserService;
 import com.xtlh.sbdemo.util.PageBean;
 import com.xtlh.sbdemo.util.PageParams;
+import com.xtlh.sbdemo.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService {
     @Qualifier("userRepository")
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      *
@@ -68,6 +72,7 @@ public class UserServiceImpl implements UserService {
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         };
+
         return userRepository.findAll(querySpecifi, pageable);
     }
 
@@ -81,6 +86,9 @@ public class UserServiceImpl implements UserService {
         JSONObject result = new JSONObject();
         result.put("rows",users);
         result.put("total",total);
+
+        redisUtil.lSet("users",users);
+        System.out.println("users的Redis结果为："+redisUtil.lGet("users",0,-1));
 
         return result.toJSONString();
     }

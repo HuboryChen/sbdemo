@@ -32,6 +32,7 @@ function initDataGrid()
             field : "username"
         }, {
             title : "密码",
+            type: "password",
             field : "password"
         }, {
             title : "类型",

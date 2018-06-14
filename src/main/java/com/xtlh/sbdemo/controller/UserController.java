@@ -3,6 +3,7 @@ package com.xtlh.sbdemo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.xtlh.sbdemo.entity.User;
 import com.xtlh.sbdemo.service.UserService;
+import com.xtlh.sbdemo.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      *
@@ -109,7 +113,6 @@ public class UserController {
     public String toModify(Long id, Model model)
     {
         User user = userService.findById(id);
-        System.out.println("============================="+new JSONObject().toJSONString(user));
         model.addAttribute("user",user);
         return "userAdd";
     }
