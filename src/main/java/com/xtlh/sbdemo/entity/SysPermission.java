@@ -1,7 +1,6 @@
 package com.xtlh.sbdemo.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @作者 陈坤
@@ -10,7 +9,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "sys_permission")
-public class SysPermission implements Serializable{
+public class SysPermission{
     private Integer id;     //权限id
     private String name;    //权限名
     private String description;     //权限描述

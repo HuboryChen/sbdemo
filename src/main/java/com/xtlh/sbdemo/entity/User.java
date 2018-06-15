@@ -1,7 +1,6 @@
 package com.xtlh.sbdemo.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User{
     private Long id;    //自动id
     private String username;    //用户名
     private String password;    //用户密码
@@ -73,7 +72,7 @@ public class User implements Serializable{
         this.status = status;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "sys_role_user",
         joinColumns = {@JoinColumn(name = "sys_user_id")},
         inverseJoinColumns = {@JoinColumn(name = "sys_role_id")})

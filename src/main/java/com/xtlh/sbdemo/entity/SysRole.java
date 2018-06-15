@@ -1,7 +1,8 @@
 package com.xtlh.sbdemo.entity;
 
+import org.springframework.context.annotation.Lazy;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_role")
-public class SysRole implements Serializable{
+@Lazy(value = false)
+public class SysRole{
 
     private Integer id;     //角色id
     private String name;    //角色名

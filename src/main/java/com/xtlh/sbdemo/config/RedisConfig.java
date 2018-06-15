@@ -122,8 +122,8 @@ public class RedisConfig extends CachingConfigurerSupport{
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        //开启事务
-        redisTemplate.setEnableTransactionSupport(true);
+
+//        redisTemplate.setEnableTransactionSupport(true);        //开启事务
         redisTemplate.setConnectionFactory(factory);
     }
 

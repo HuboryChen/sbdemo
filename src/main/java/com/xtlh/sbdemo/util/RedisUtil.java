@@ -1,5 +1,6 @@
 package com.xtlh.sbdemo.util;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -13,7 +14,6 @@ import java.util.concurrent.TimeUnit;
  * @创建日期 2018/6/7
  * @功能描述 封装RedisTemplate的RedisUtil类
  */
-
 public class RedisUtil {
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -442,7 +442,6 @@ public class RedisUtil {
      * 将list放入缓存
      * @param key 键
      * @param value 值
-     * @param time 时间(秒)
      * @return
      */
     public boolean lSet(String key, Object value)
@@ -479,7 +478,6 @@ public class RedisUtil {
      * 将list放入缓存
      * @param key 键
      * @param value 值
-     * @param time 时间(秒)
      * @return
      */
     public boolean lSet(String key, List<Object> value)

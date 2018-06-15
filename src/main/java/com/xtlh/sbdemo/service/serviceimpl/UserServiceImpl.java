@@ -87,9 +87,6 @@ public class UserServiceImpl implements UserService {
         result.put("rows",users);
         result.put("total",total);
 
-        redisUtil.lSet("users",users);
-        System.out.println("users的Redis结果为："+redisUtil.lGet("users",0,-1));
-
         return result.toJSONString();
     }
 
