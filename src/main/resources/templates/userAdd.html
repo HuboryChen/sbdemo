@@ -7,14 +7,13 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="/css/plugins/chosen/chosen.css">
-    <script  src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script  src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
-    <script src="http://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
-    <script src="/js/plugins/chosen/chosen.jquery.js"></script>
+    <!--<link rel="stylesheet" href="/css/plugins/layer/skin/layer.css">-->
+
+    <script data-main="js/app/usermanage/userAdd" src="js/lib/require.js" defer async="true"></script>
     <style>
         .form-inline label{ justify-content: right; }
     </style>
-    <script th:inline="javascript">
+   <!-- <script th:inline="javascript">
         /*<![CDATA[*/
         $(function () {
             var optionstring = "";
@@ -37,7 +36,7 @@
             })
         })
         /*]]>*/
-    </script>
+    </script>-->
 </head>
 <body class="container">
     <div id="userData" class="panel panel-default ">
@@ -95,23 +94,6 @@
         </form>
 
     </div>
-
-    <script>
-        $("#btn_save").click(function () {
-            var url = $("#user_form").attr("action");
-            var param = $("#user_form").serialize();
-            $.ajax({
-                type: "post",
-                url: url,
-                data: param,
-                complete: function () {
-                    parent.window.location.reload();
-                    parent.layer.closeAll();
-                }
-            })
-        })
-
-    </script>
 
 </body>
 </html>
