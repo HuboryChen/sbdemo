@@ -8,16 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--360浏览器优先以webkit内核解析-->
-
-
     <title>H+ 后台主题UI框架 - 主页示例</title>
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="/css/bootstrap.min.css?v=3.3.6"  rel="stylesheet">
-    <link href="/css/plugins/bootstrap-table/bootstrap-table.min.css?v=3.3.6"  rel="stylesheet">
-    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script data-main="js/app/usermanage/userList" src="js/lib/require.js" defer async="true"></script>
 
 </head>
 
@@ -31,7 +25,7 @@
         <form class="form-inline">
             <!-- 工具栏 -->
             <div id="toolbar" class="btn-group">
-                <button id="btn_add" type="button" class="btn btn-default" onclick="addUser()">
+                <button id="btn_add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true">新增</span>
                 </button>
                 <!--<button id="btn_edit" type="button" class="btn btn-default">
@@ -49,8 +43,5 @@
 
 </div>
 
-<script data-main="js/app/usermanage/userList" src="js/lib/require.js" defer async="true"></script>
-
 </body>
-
 </html>

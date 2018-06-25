@@ -1,5 +1,5 @@
 require(['js/main.js'],function (main) {
-    requirejs(['jquery', 'bootstrap', 'layer','chosen'], function ($) {
+    requirejs(['jquery', 'layer', 'bootstrap','chosen'], function ($,layer) {
 
        /* /!*<![CDATA[*!/
         $(function () {
