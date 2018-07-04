@@ -24,9 +24,8 @@ public class PermissionRepositoryTest {
     PermissionRepository permissionRepository;
 
     @Test
-    public void testFindAll()
-    {
+    public void testFindAll() {
         List<SysPermission> all = permissionRepository.findAll();
-        System.out.println(all.size()+"===========================");
+        System.out.println(all.size() + "===========================");
     }
 }
