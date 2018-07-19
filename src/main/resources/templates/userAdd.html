@@ -38,6 +38,20 @@
         })
         /*]]>*/
     </script>
+
+    <script type="text/html" id="thymeleafTable">
+        <table>
+            <tr>
+                <th th:text="#{Order.type}"></th>
+                <td>
+                    <select name="type">
+                        <option value="" th:text="#{admin.common.choose}"></option>
+                        <option th:each="value : ${types}" th:value="${value}" th:attr="selected = ${value == type} ? 'selected' : ''" th:text="#{'Order.Type.' + ${value}}"></option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </script>
 </head>
 <body class="container">
     <div id="userData" class="panel panel-default ">

@@ -1,6 +1,7 @@
 package com.xtlh.sbdemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xtlh.sbdemo.util.LogUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,14 +17,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MySpringBootApplicationTests.class)
 public class MySpringBootApplicationTests {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void contextLoads() {
-        logger.trace("I am trace log.");
-        logger.debug("I am debug log.");
-        logger.warn("I am warn log.");
-        logger.error("I am error log.");
+        Logger platformLogger = LogUtils.getPlatformLogger();
+        Logger exceptionLogger = LogUtils.getExceptionLogger();
+        Logger bussinessLogger = LogUtils.getBussinessLogger();
+        Logger dbLogger = LogUtils.getDBLogger();
+
+        platformLogger.trace("getPlatformLogger==============日志测试");
+        exceptionLogger.error("getExceptionLogger===============日志测试");
+        bussinessLogger.info("getBussinessLogger===============日志测试");
+        dbLogger.debug("getDBLogger===============日志测试");
     }
 }

@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Service
 public class MyUserDetailService implements UserDetailsService{
-    @Qualifier("userRepository")
+@Qualifier("userRepository")
     @Autowired
     UserRepository userRepository;
 

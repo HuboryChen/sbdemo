@@ -107,8 +107,8 @@ spring:
       ddl-auto: update
     show-sql: true
 
-logging:
-  config: classpath:log4j2.yml
-
-
 #日志配置
+logging:
+  config: classpath:config/log4j2.yml   #引入日志管理的log4j2的配置文件
+
+
