@@ -103,6 +103,7 @@ spring:
 #      aop-patterns:             # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
 
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #在Springboot2.0版本中，Hibernate创建数据库表的时候，默认的数据库引擎是MyISAM
     hibernate:
       ddl-auto: update
     show-sql: true

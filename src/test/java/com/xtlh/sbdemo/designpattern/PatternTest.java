@@ -1,16 +1,11 @@
 package com.xtlh.sbdemo.designpattern;
 
-import com.xtlh.sbdemo.SbdemoApplication;
 import com.xtlh.sbdemo.designpattern.observerpattern.ConcreteSubject;
 import com.xtlh.sbdemo.designpattern.observerpattern.ConcreteWatcher;
 import com.xtlh.sbdemo.designpattern.observerpattern.Subject;
 import com.xtlh.sbdemo.designpattern.observerpattern.Watcher;
 import com.xtlh.sbdemo.designpattern.proxypattern.*;
-import org.hibernate.proxy.ProxyFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @Author:
@@ -18,8 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @Date: Created in ${Time} 2018/7/19
  * @Modified By:
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SbdemoApplication.class)
 public class PatternTest
 {
 
